@@ -16,9 +16,11 @@ function layout({children}:PropsWithChildren) {
         {/* second-col hide dropdown on bg screen */}
         <div className="lg:col-span-4">
 
+
           <Navbar/>
+          <div className="py-16 px-4 sm:px-4 lg:px-4">  {children}</div>
         </div>
-        <div className="py-16 px-4 sm:px-4 lg:px-4">  {children}</div>
+
 
       </main>
 
