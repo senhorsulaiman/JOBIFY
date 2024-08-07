@@ -1,15 +1,16 @@
-"use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-
-
 import { Button } from "@/components/ui/button"
 import { Form } from '@/components/ui/form';
 import { JobStatus,JobMode,creatAndEditJobSchema,CreatAndEditJobType } from "@/utils/types"
 
 import {CustomFormSelect, CustomFormFeild } from "./FormComponents"
 import { object } from "zod"
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from 'next/navigation';
+import { createJobAction } from "@/utils/action";
 // const formSchema = z.object({
 //     username: z.string().min(2, {
 //       message: "Username must be at least 2 characters.",
@@ -17,6 +18,30 @@ import { object } from "zod"
 //   })
 
 function CreateJobForm() {
+  const QueryClient=useQueryClient();
+const {toast}=useToast();
+const router=useRouter();
+const {mutate,isPending}=useMutation({
+
+  mutationFn:(values:CreatAndEditJobType)=>createJobAction(values),
+  onSuccess:(data)=>{
+    if(!data){
+      toast({
+        description:"there was an error"
+      })
+      return;
+    }
+    toast({
+      description:"job created"
+    });
+    QueryClient.invalidateQueries({queryKey:['jobs']});
+    QueryClient.invalidateQueries({queryKey:['stats']});
+    QueryClient.invalidateQueries({queryKey:['charts']});
+
+    router.push('./jobs')
+
+  }
+})
 
     const form = useForm<CreatAndEditJobType>({
         resolver: zodResolver(creatAndEditJobSchema),
@@ -24,8 +49,8 @@ function CreateJobForm() {
          position: "",
          company:'',
          location:'',
-         status:JobStatus.pending,
-         mode:JobMode.FullTime,
+         status:JobStatus.Pending,
+         mode:JobMode.fullTime,
         },
       })
 
@@ -33,7 +58,8 @@ function CreateJobForm() {
       function onSubmit(values: CreatAndEditJobType) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        // console.log(values)
+        mutate(values);
       }
   return (
         <Form {...form}>
@@ -50,10 +76,11 @@ function CreateJobForm() {
                       <CustomFormSelect name="status" control={form.control} labelText="job status " items={Object.values(JobStatus)}/>
                      {/* job  type */}
                     <CustomFormSelect name="mode" control={form.control} labelText="job mode " items={Object.values(JobMode)}/>
-
+                    {/* btn */}
+                    <Button type="submit" className=" dark:text-white self-end ">Submit</Button>
 
                 </div>
-                <Button type="submit" className="mt-4 dark:text-white">Submit</Button>
+
             </form>
         </Form>
   )

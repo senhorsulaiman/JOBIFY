@@ -62,12 +62,12 @@ import {
         name={name}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{name}</FormLabel>
+            <FormLabel>{labelText || name}</FormLabel>
 
             <FormControl>
-            <Select onOpenChange={field.onChange} defaultValue={field.value}>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
   <SelectTrigger >
-    <SelectValue placeholder="Theme" />
+    <SelectValue placeholder={labelText} />
   </SelectTrigger>
   <SelectContent>
 
