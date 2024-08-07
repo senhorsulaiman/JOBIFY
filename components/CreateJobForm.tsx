@@ -76,7 +76,7 @@ const {mutate,isPending}=useMutation({
                       <CustomFormSelect name="status" control={form.control} labelText="job status " items={Object.values(JobStatus)}/>
                      {/* job  type */}
                     <CustomFormSelect name="mode" control={form.control} labelText="job mode " items={Object.values(JobMode)}/>
-                    {/* btn */}
+                    {/*submit btn */}
                     <Button type="submit" className=" dark:text-white self-end ">Submit</Button>
 
                 </div>

@@ -62,7 +62,7 @@ import {
         name={name}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>{labelText || name}</FormLabel>
+            <FormLabel>{labelText || name }</FormLabel>
 
             <FormControl>
             <Select onValueChange={field.onChange} defaultValue={field.value}>
