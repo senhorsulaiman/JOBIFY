@@ -18,9 +18,9 @@ import {
   } from "@/components/ui/select"
 
 function SearchForm() {
-    // const searchParams = useSearchParams();
-    // const search = searchParams.get('search') || '';
-    // const jobStatus = searchParams.get('jobStatus') || 'all';
+  const searchParams = useSearchParams();
+   const search = searchParams.get('search') || '';
+    const jobStatus = searchParams.get('jobStatus') || 'all';
     const router=useRouter();
     const pathname=usePathname();
 
@@ -39,8 +39,8 @@ router.push(`${pathname}?${params.toString()}`)
    <form className='bg-muted mb-16 p-8 grid sm:grid-cols-2 gap-4 rounded-lg' onSubmit={handleSubmit}>
 
 
-    <Input name='search' placeholder='Search Jobs' className='' />
-    <Select name='jobStatus'>
+    <Input name='search' placeholder='Search Jobs'  defaultValue={search} className='' />
+    <Select name='jobStatus' defaultValue={jobStatus}>
       <SelectTrigger >
         <SelectValue />
       </SelectTrigger>

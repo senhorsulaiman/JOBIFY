@@ -9,7 +9,7 @@ type NavLink={
 const links:NavLink[]=[
     {
     href:'/add-job',
-    label:'all jobs',
+    label:'add jobs',
     icon: <Layers />,
     },
     {
